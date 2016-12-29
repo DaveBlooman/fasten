@@ -1,0 +1,25 @@
+hash: 0a66aef66cb73611d15be8266f326fe41e2de9470346adb05e6bcebe4ea91673
+updated: 2016-12-29T22:51:28.838788627Z
+imports:
+- name: github.com/armon/go-radix
+  version: 4239b77079c7b5d1243b7b4736304ce8ddb6f0f2
+- name: github.com/bgentry/speakeasy
+  version: 675b82c74c0ed12283ee81ba8a534c8982c07b85
+- name: github.com/mattn/go-isatty
+  version: 66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8
+- name: github.com/mitchellh/cli
+  version: fa17b36f6c61f1ddbbb08c9f6fde94b3c065a09d
+- name: golang.org/x/crypto
+  version: 1ed0c38df5ad473c1d85c1f6490fb2868601a1d3
+  subpackages:
+  - curve25519
+  - ed25519
+  - ed25519/internal/edwards25519
+  - ssh
+- name: golang.org/x/sys
+  version: 9bb9f0998d48b31547d975974935ae9b48c7a03c
+  subpackages:
+  - unix
+- name: gopkg.in/yaml.v2
+  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
+testImports: []
