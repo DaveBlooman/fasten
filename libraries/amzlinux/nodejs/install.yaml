@@ -1,0 +1,2 @@
+pre-command: ls
+command: npm install

@@ -1,0 +1,16 @@
+cloud: AWS
+ip_address: 52.209.159.29
+operating_system: amzlinux
+key_pair: /Users/dblooman/Dropbox/Important/daves-aws.pem
+install_dir: /home/ec2-user
+applications:
+- language: ruby
+  name: ruby-app
+  path: /Users/dblooman/go/src/github.com/DaveBlooman/fasten/ruby-app
+  pre_command:
+  run_command: rackup
+- language: nodejs
+  name: node-app
+  path: /Users/dblooman/go/src/github.com/DaveBlooman/fasten/node-app
+  pre_command:
+  run_command: node index.js

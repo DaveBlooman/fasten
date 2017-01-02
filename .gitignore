@@ -25,3 +25,4 @@ _testmain.go
 fasten
 .DS_Store
 vendor/
+node_modules/

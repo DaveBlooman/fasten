@@ -12,6 +12,7 @@ func Run(args []string) int {
 
 	// Meta-option for executables.
 	// It defines output color and its stdout/stderr stream.
+	// var dave string
 	meta := &command.Meta{
 		Ui: &cli.ColoredUi{
 			InfoColor:  cli.UiColorBlue,

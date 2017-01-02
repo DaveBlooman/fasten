@@ -6,6 +6,9 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/DaveBlooman/fasten/output"
+	"github.com/fatih/color"
 )
 
 func PromptUntilYorN() bool {
@@ -22,16 +25,62 @@ func PromptUntilYorN() bool {
 }
 
 func PromptCloud() string {
-	res, err := PromptUntil([]string{"aws"})
+	items := []string{"AWS", "GCP", "Azure"}
+
+	output.Selection(items)
+
+	for {
+		reader := bufio.NewReader(os.Stdin)
+		text, err := reader.ReadString('\n')
+		if err != nil {
+			output.Error("cannot read IP Address")
+		}
+		selection, err := strconv.Atoi(strings.TrimSpace(text))
+		if err != nil {
+			fmt.Println("please try again")
+			continue
+		}
+		if selection > len(items) {
+			fmt.Println("please select from the list above")
+			continue
+		}
+		return items[selection-1]
+	}
+
+}
+
+func PromptIP() string {
+	reader := bufio.NewReader(os.Stdin)
+	text, err := reader.ReadString('\n')
 	if err != nil {
-		panic(err)
+		output.Error("cannot read IP Address")
+	}
+	return strings.TrimSpace(text)
+}
+
+func PromptOS() string {
+	items := []string{"ubuntu1604", "Amazon Linux", "centOS7", "SUSE Linux"}
+
+	output.Selection(items)
+
+	for {
+		reader := bufio.NewReader(os.Stdin)
+		text, err := reader.ReadString('\n')
+		if err != nil {
+			output.Error("OS selection not valid")
+		}
+		selection, err := strconv.Atoi(strings.TrimSpace(text))
+		if err != nil {
+			fmt.Println("please try again")
+			continue
+		}
+		if selection > len(items) {
+			fmt.Println("please select from the list above")
+			continue
+		}
+		return items[selection-1]
 	}
 
-	if res == "aws" || res == "amazon" {
-		return "aws"
-	}
-
-	return "invalid cloud provider"
 }
 
 func PromptApps() int {
@@ -68,4 +117,44 @@ func PromptUntil(opts []string) (string, error) {
 			}
 		}
 	}
+}
+
+func PromptKeyPair() string {
+	reader := bufio.NewReader(os.Stdin)
+	text, err := reader.ReadString('\n')
+	if err != nil {
+		output.Error("cannot read path")
+	}
+	return strings.TrimSpace(text)
+}
+
+func PromptLang() string {
+
+	items := []string{"ruby", "nodejs", "python", "java", "golang", "go", "rust"}
+
+	output.Selection(items)
+
+	for {
+		reader := bufio.NewReader(os.Stdin)
+		text, err := reader.ReadString('\n')
+		if err != nil {
+			output.Error("Language selection not valid")
+		}
+		selection, err := strconv.Atoi(strings.TrimSpace(text))
+		if err != nil {
+			fmt.Println("please try again")
+			continue
+		}
+		if selection > len(items) {
+			fmt.Println("please select from the list above")
+			continue
+		}
+		return items[selection-1]
+	}
+
+}
+
+func changeColor(text string, code color.Attribute) string {
+	c := color.New(code).SprintFunc()
+	return c(text)
 }

@@ -1,10 +1,14 @@
 hash: 0a66aef66cb73611d15be8266f326fe41e2de9470346adb05e6bcebe4ea91673
-updated: 2016-12-29T22:51:28.838788627Z
+updated: 2016-12-30T15:59:31.307824654Z
 imports:
 - name: github.com/armon/go-radix
   version: 4239b77079c7b5d1243b7b4736304ce8ddb6f0f2
 - name: github.com/bgentry/speakeasy
   version: 675b82c74c0ed12283ee81ba8a534c8982c07b85
+- name: github.com/fatih/color
+  version: 9ab0325f4904aac7c2c60db3cff3b35f415575c7
+- name: github.com/mattn/go-colorable
+  version: 6c903ff4aa50920ca86087a280590b36b3152b9c
 - name: github.com/mattn/go-isatty
   version: 66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8
 - name: github.com/mitchellh/cli
