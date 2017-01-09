@@ -1,7 +1,7 @@
 cloud: AWS
-ip_address: 52.209.159.29
+ip_address: 54.157.17.65
 operating_system: amzlinux
-key_pair: /Users/dblooman/Dropbox/Important/daves-aws.pem
+key_pair: fasten.pem
 install_dir: /home/ec2-user
 applications:
 - language: ruby

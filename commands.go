@@ -14,6 +14,12 @@ func Commands(meta *command.Meta) map[string]cli.CommandFactory {
 			}, nil
 		},
 
+		"setup": func() (cli.Command, error) {
+			return &command.SetupCommand{
+				Meta: *meta,
+			}, nil
+		},
+
 		"init": func() (cli.Command, error) {
 			return &command.InitCommand{
 				Meta: *meta,

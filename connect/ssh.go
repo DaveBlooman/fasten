@@ -190,11 +190,9 @@ func (s *SSHClient) StartApplication(app appmeta.Application, stack appmeta.AppS
 		return err
 	}
 
-	checkSession.Stdout = os.Stdout
-	err = checkSession.Run(fmt.Sprintf("if [[ -a \"%s/%s.pid\" ]]; then echo 0; else echo 1; fi", path, app.Lang))
+	err = checkSession.Run(fmt.Sprintf("if [[ -a \"%s/%s.pid\" ]]; then exit 1; else exit 0; fi", path, app.Lang))
 	checkSession.Close()
 	if err != nil {
-		fmt.Println(fmt.Sprintf("if [[ -a \"%s/%s.pid\" ]]; then echo 0; else echo 1; fi", path, app.Lang))
 
 		stopSession, err := s.Connection.NewSession()
 		if err != nil {
@@ -205,7 +203,7 @@ func (s *SSHClient) StartApplication(app appmeta.Application, stack appmeta.AppS
 		stopSession.Stdout = os.Stdout
 		stopSession.Stderr = os.Stderr
 
-		err = stopSession.Run(fmt.Sprintf("cd %s && cat %s.pid | xargs kill", path, app.Lang))
+		err = stopSession.Run(fmt.Sprintf("cd %s ; cat %s.pid | xargs kill", path, app.Lang))
 
 		if err != nil {
 			output.Error("Failed to stop application")
@@ -214,31 +212,29 @@ func (s *SSHClient) StartApplication(app appmeta.Application, stack appmeta.AppS
 
 		output.Standard("Stopping Application")
 
+		// Give time for application to stop
+		time.Sleep(3 * time.Second)
+
 		stopSession.Close()
 	}
 
-	if app.PreCommand != "" {
-		preSession, err := s.Connection.NewSession()
-		if err != nil {
-			fmt.Printf("Failed to create session: %s", err)
-			return err
-		}
-
-		fmt.Println(fmt.Sprintf("cd %s && %s", path, app.PreCommand))
-
-		err = preSession.Run(fmt.Sprintf("cd %s && %s", path, app.PreCommand))
-
-		preSession.Stdout = os.Stdout
-		preSession.Stderr = os.Stderr
-
-		if err != nil {
-			fmt.Println(err)
-			output.Error("Pre-command failed to run")
-			return err
-		}
-
-		preSession.Close()
-	}
+	//
+	// if app.PreCommand != "" {
+	// preSession, err := s.Connection.NewSession()
+	// if err != nil {
+	// 	fmt.Printf("Failed to create session: %s", err)
+	// 	return err
+	// }
+	// err = preSession.Run(fmt.Sprintf("cd %s && %s", path, app.PreCommand))
+	//
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	output.Error("Pre-command failed to run")
+	// 	return err
+	// }
+	//
+	// preSession.Close()
+	// }
 
 	startSession, err := s.Connection.NewSession()
 	if err != nil {
@@ -246,7 +242,10 @@ func (s *SSHClient) StartApplication(app appmeta.Application, stack appmeta.AppS
 		return err
 	}
 
-	err = startSession.Run(fmt.Sprintf("cd %s && nohup %s > /dev/null 2>&1 & echo $! > %s/%s.pid", path, app.RunCommand, path, app.Lang))
+	// startSession.Stdout = os.Stdout
+	// startSession.Stderr = os.Stderr
+
+	err = startSession.Run(fmt.Sprintf("cd %s ; nohup %s >/dev/null 2>&1 >> app.log & echo $! > %s/%s.pid", path, app.RunCommand, path, app.Lang))
 
 	if err != nil {
 		output.Error("Application start failed")

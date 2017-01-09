@@ -21,6 +21,14 @@ func Banner(name string, flags map[string]string) {
 	}
 }
 
+// Status outputs a summary of the command & flags
+func Status(name string, flags map[string]string) {
+	fmt.Printf("%s : %s:\t %s \n", FastenText(), changeColor("Type", color.FgGreen), changeColor(name, color.FgGreen))
+	for key, val := range flags {
+		fmt.Printf("%s : %s:\t %s \n", FastenText(), changeColor(strings.Title(key), color.FgBlue), changeColor(val, color.FgWhite))
+	}
+}
+
 // Standard output
 func Standard(summary string) {
 	fmt.Printf("%s : %s \n", FastenText(), changeColor(summary, color.FgBlue))

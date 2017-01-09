@@ -5,6 +5,7 @@
 // libraries/amzlinux/nodejs/nodejs.sh
 // libraries/amzlinux/ruby/install.yaml
 // libraries/amzlinux/ruby/ruby.sh
+// libraries/status_template.json
 // libraries/ubuntu1604/nodejs.sh
 // libraries/ubuntu1604/ruby.sh
 // DO NOT EDIT!
@@ -154,7 +155,7 @@ func librariesAmzlinuxRubyInstallYaml() (*asset, error) {
 	return a, nil
 }
 
-var _librariesAmzlinuxRubyRubySh = []byte("\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\x5c\x8e\x31\xae\xc2\x30\x10\x44\x7b\x9f\x62\x7f\x3e\xad\x31\x0a\x1d\x12\x91\xe8\x28\x29\xb8\x80\xed\x8c\x70\xa4\x38\x8e\x76\x6d\x84\x6f\x8f\x1c\x44\x43\xb3\xab\x99\x37\xc5\xfb\xff\x33\x6e\x5a\x8c\xb3\x12\x94\xaa\x25\x12\xd8\x0a\x88\x8b\xab\xfd\x61\x7b\xa4\xeb\x06\xa6\x45\xb2\x9d\xe7\x0f\x3a\xea\x11\x4f\x7c\x43\x9b\x3c\x10\xa9\xac\xa3\xcd\x20\xad\xa5\x4a\x46\x54\xf0\x21\x51\x87\xd7\x9a\x38\xd3\xed\x72\xbf\x9e\x77\xed\x9e\x4c\x48\x11\x06\xbe\xd7\x45\xc0\x4d\xa0\xa3\x61\xa0\x9f\x7a\xdf\xa4\xd8\xab\x77\x00\x00\x00\xff\xff\xba\x1e\x2a\x60\xa3\x00\x00\x00")
+var _librariesAmzlinuxRubyRubySh = []byte("\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\x5c\x8e\x31\xae\xc2\x30\x10\x05\x7b\x9f\x62\x7f\x3e\xed\x62\x14\x3a\x24\x22\xd1\x51\x52\x70\x01\x3b\x79\x22\x91\xe2\x38\xf2\xda\x08\x73\x7a\x64\x03\x0d\xcd\x5b\xed\x4c\x33\xff\x7f\xda\x4e\x8b\xb6\x46\x46\xa5\x72\x72\x84\x60\x04\x14\x92\xcd\xed\xae\x1e\xe2\x5c\xc5\xb4\x48\x34\xf3\xfc\x56\x7b\x1e\x70\xc7\xf7\xa1\xe7\x3c\xd9\x3a\x1f\xcc\x59\xdd\xe0\x28\xad\x83\x89\x20\x66\xc9\x12\xe1\x14\xfa\xd1\x53\x83\xc7\xea\x43\xa4\xcb\xe9\x7a\x3e\x6e\xca\x1e\xf4\xe8\x1d\x34\xfa\x96\x93\x20\x94\xa0\x86\xba\x8e\x7e\xf0\xb6\x44\x86\x5e\xbd\x02\x00\x00\xff\xff\x55\x9d\x16\x69\xb3\x00\x00\x00")
 
 func librariesAmzlinuxRubyRubyShBytes() ([]byte, error) {
 	return bindataRead(
@@ -169,7 +170,27 @@ func librariesAmzlinuxRubyRubySh() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "libraries/amzlinux/ruby/ruby.sh", size: 163, mode: os.FileMode(420), modTime: time.Unix(1483379470, 0)}
+	info := bindataFileInfo{name: "libraries/amzlinux/ruby/ruby.sh", size: 179, mode: os.FileMode(420), modTime: time.Unix(1483896302, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _librariesStatus_templateJson = []byte("\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\xaa\xe6\x52\x50\x50\x4a\x2c\x28\xc8\xc9\x4c\x4e\x2c\xc9\xcc\xcf\x8b\xcf\x4b\xcc\x4d\x55\xb2\x52\x50\x4a\xcb\xcf\x57\xd2\x41\x97\x2c\x48\x2c\xc9\x00\x49\x82\x69\xae\x5a\x2e\x40\x00\x00\x00\xff\xff\xb7\xc7\xad\xd8\x3e\x00\x00\x00")
+
+func librariesStatus_templateJsonBytes() ([]byte, error) {
+	return bindataRead(
+		_librariesStatus_templateJson,
+		"libraries/status_template.json",
+	)
+}
+
+func librariesStatus_templateJson() (*asset, error) {
+	bytes, err := librariesStatus_templateJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "libraries/status_template.json", size: 62, mode: os.FileMode(420), modTime: time.Unix(1483911827, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -271,6 +292,7 @@ var _bindata = map[string]func() (*asset, error){
 	"libraries/amzlinux/nodejs/nodejs.sh": librariesAmzlinuxNodejsNodejsSh,
 	"libraries/amzlinux/ruby/install.yaml": librariesAmzlinuxRubyInstallYaml,
 	"libraries/amzlinux/ruby/ruby.sh": librariesAmzlinuxRubyRubySh,
+	"libraries/status_template.json": librariesStatus_templateJson,
 	"libraries/ubuntu1604/nodejs.sh": librariesUbuntu1604NodejsSh,
 	"libraries/ubuntu1604/ruby.sh": librariesUbuntu1604RubySh,
 }
@@ -327,6 +349,7 @@ var _bintree = &bintree{nil, map[string]*bintree{
 				"ruby.sh": &bintree{librariesAmzlinuxRubyRubySh, map[string]*bintree{}},
 			}},
 		}},
+		"status_template.json": &bintree{librariesStatus_templateJson, map[string]*bintree{}},
 		"ubuntu1604": &bintree{nil, map[string]*bintree{
 			"nodejs.sh": &bintree{librariesUbuntu1604NodejsSh, map[string]*bintree{}},
 			"ruby.sh": &bintree{librariesUbuntu1604RubySh, map[string]*bintree{}},

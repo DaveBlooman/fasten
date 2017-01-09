@@ -16,3 +16,6 @@ type Application struct {
 	PreCommand string `yaml:"pre_command"`
 	RunCommand string `yaml:"run_command"`
 }
+
+type InstanceInfo struct {
+}
