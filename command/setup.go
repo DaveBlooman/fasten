@@ -63,7 +63,7 @@ func (c *SetupCommand) Run(args []string) int {
 	}
 
 	fasteKeyPair := []byte(*resp.PrivateKeyBase64)
-	err = ioutil.WriteFile("fasten.pem", fasteKeyPair, 0644)
+	err = ioutil.WriteFile("fasten.pem", fasteKeyPair, 0400)
 	if err != nil {
 		output.Error(err.Error())
 		return 1

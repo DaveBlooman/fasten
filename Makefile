@@ -12,5 +12,9 @@ status:
 	go install
 	fasten status
 
+setup:
+	go install
+	fasten setup
+
 bindata:
 	go-bindata -pkg command -o command/bindata.go libraries/...
