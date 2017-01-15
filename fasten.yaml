@@ -1,5 +1,5 @@
 cloud: AWS
-ip_address: 54.157.17.65
+ip_address: 54.174.217.139
 operating_system: amzlinux
 key_pair: fasten.pem
 install_dir: /home/ec2-user

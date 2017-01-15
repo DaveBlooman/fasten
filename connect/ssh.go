@@ -76,7 +76,13 @@ func (s *SSHClient) CopyFile(contentsBytes []byte, filename, destination string)
 		return err
 	}
 
+	fmt.Println(destination)
+	fmt.Println(filename)
+
 	defer session.Close()
+
+	session.Stderr = os.Stderr
+	session.Stdout = os.Stdout
 
 	contents := string(contentsBytes)
 
@@ -90,7 +96,7 @@ func (s *SSHClient) CopyFile(contentsBytes []byte, filename, destination string)
 		fmt.Fprint(w, contents)
 		fmt.Fprint(w, "\x00")
 	}()
-	if err := session.Run("/usr/bin/scp -tr " + destination + "/" + filename); err != nil {
+	if err := session.Run("/usr/bin/scp -trp " + destination + "/" + filename); err != nil {
 		output.Error("Error copying installation files to server")
 	}
 	return nil
@@ -149,6 +155,7 @@ func (s *SSHClient) MakeDir(destination string) error {
 		fmt.Println(err)
 	}
 
+	session.Stderr = os.Stderr
 	err = session.Run("mkdir -p " + destination)
 	if err != nil {
 		output.Standard("unable to make destination")
@@ -200,8 +207,8 @@ func (s *SSHClient) StartApplication(app appmeta.Application, stack appmeta.AppS
 			return err
 		}
 
-		stopSession.Stdout = os.Stdout
-		stopSession.Stderr = os.Stderr
+		// stopSession.Stdout = os.Stdout
+		// stopSession.Stderr = os.Stderr
 
 		err = stopSession.Run(fmt.Sprintf("cd %s ; cat %s.pid | xargs kill", path, app.Lang))
 
@@ -218,32 +225,27 @@ func (s *SSHClient) StartApplication(app appmeta.Application, stack appmeta.AppS
 		stopSession.Close()
 	}
 
-	//
-	// if app.PreCommand != "" {
-	// preSession, err := s.Connection.NewSession()
-	// if err != nil {
-	// 	fmt.Printf("Failed to create session: %s", err)
-	// 	return err
-	// }
-	// err = preSession.Run(fmt.Sprintf("cd %s && %s", path, app.PreCommand))
-	//
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	output.Error("Pre-command failed to run")
-	// 	return err
-	// }
-	//
-	// preSession.Close()
-	// }
+	if app.PreCommand != "" {
+		preSession, err := s.Connection.NewSession()
+		if err != nil {
+			output.Error("Failed to create SSH session")
+			return err
+		}
+
+		err = preSession.Run(fmt.Sprintf("cd %s && %s", path, app.PreCommand))
+		if err != nil {
+			output.Error("Pre-command failed to run")
+			return err
+		}
+
+		preSession.Close()
+	}
 
 	startSession, err := s.Connection.NewSession()
 	if err != nil {
-		fmt.Printf("Failed to create session: %s", err)
+		output.Error("Failed to create SSH session")
 		return err
 	}
-
-	// startSession.Stdout = os.Stdout
-	// startSession.Stderr = os.Stderr
 
 	err = startSession.Run(fmt.Sprintf("cd %s ; nohup %s >/dev/null 2>&1 >> app.log & echo $! > %s/%s.pid", path, app.RunCommand, path, app.Lang))
 

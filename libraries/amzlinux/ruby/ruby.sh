@@ -1,6 +1,9 @@
 #!/bin/bash
 
+set -eux
+
 yum update -y
+
 yum erase ruby20 ruby -y
 yum install ruby23-devel ruby23 zlib zlib-devel -y
 gem update --system
