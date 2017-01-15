@@ -1,5 +1,16 @@
 package: github.com/DaveBlooman/fasten
 import:
+- package: github.com/aws/aws-sdk-go
+  version: ^1.6.10
+  subpackages:
+  - aws
+  - aws/awserr
+  - aws/session
+  - service/lightsail
+- package: github.com/fatih/color
+  version: ^1.2.0
+- package: github.com/jteeuwen/go-bindata
+  version: ^3.0.7
 - package: github.com/mitchellh/cli
 - package: golang.org/x/crypto
   subpackages:

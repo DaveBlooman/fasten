@@ -99,19 +99,25 @@ func (c *DeployCommand) Help() string {
 
 func copyFiles(app appmeta.Application, stack appmeta.AppStack, appDestination string, connection connect.SSHClient) error {
 
-	fileList := getFiles(app.Path)
+	fileList, dirList := getFiles(app.Path)
+
+	for _, dir := range dirList {
+
+		dirName := strings.SplitAfter(dir, app.Path)[1]
+
+		err := connection.MakeDir(appDestination + dirName)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
 
 	for _, file := range fileList {
 		data, err := ioutil.ReadFile(file)
-
-		fileName := strings.SplitAfter(file, app.Path)[1]
-		if strings.HasPrefix(fileName, "/") {
-			fileName = strings.Replace(fileName, "/", "", -1)
-		}
-
 		if err != nil {
 			return err
 		}
+
+		fileName := strings.SplitAfter(file, app.Path)[1]
 
 		fileCopy := connection.CopyFile(data, fileName, appDestination)
 		if fileCopy != nil {
@@ -122,14 +128,17 @@ func copyFiles(app appmeta.Application, stack appmeta.AppStack, appDestination s
 	return nil
 }
 
-func getFiles(filesDir string) []string {
+func getFiles(filesDir string) ([]string, []string) {
 
 	fileList := []string{}
+	dirList := []string{}
+
 	err := filepath.Walk(filesDir, func(path string, f os.FileInfo, err error) error {
 		if err != nil {
 			log.Fatal("Error:", err)
 		}
 		if f.IsDir() {
+			dirList = append(dirList, path)
 			return nil
 		}
 		fileList = append(fileList, path)
@@ -139,5 +148,5 @@ func getFiles(filesDir string) []string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return fileList
+	return fileList, dirList
 }

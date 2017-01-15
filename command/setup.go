@@ -2,10 +2,12 @@ package command
 
 import (
 	"io/ioutil"
+	"log"
 	"strings"
 
 	"github.com/DaveBlooman/fasten/output"
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/lightsail"
 )
@@ -13,33 +15,6 @@ import (
 type SetupCommand struct {
 	Meta
 }
-
-// func (c *SetupCommand) Run(args []string) int {
-// 	config := &aws.Config{
-// 		Region: aws.String("us-east-1"),
-// 	}
-//
-// 	sess, err := session.NewSession(config)
-// 	if err != nil {
-// 		output.Error("failed to create AWS session")
-// 		return 1
-// 	}
-//
-// 	svc := lightsail.New(sess)
-//
-// 	params := &lightsail.GetInstancesInput{}
-// 	resp, err := svc.GetInstances(params)
-//
-// 	if err != nil {
-// 		// Print the error, cast err to awserr.Error to get the Code and
-// 		// Message from an error.
-// 		fmt.Println(err.Error())
-// 		return 1
-// 	}
-//
-// 	fmt.Println(resp)
-// 	return 0
-// }
 
 func (c *SetupCommand) Run(args []string) int {
 
@@ -65,7 +40,7 @@ func (c *SetupCommand) Run(args []string) int {
 	fasteKeyPair := []byte(*resp.PrivateKeyBase64)
 	err = ioutil.WriteFile("fasten.pem", fasteKeyPair, 0644)
 	if err != nil {
-		output.Error(err.Error())
+		output.Error("Error creating key, is there already a key in your directory?")
 		return 1
 	}
 
@@ -92,8 +67,13 @@ func (c *SetupCommand) Run(args []string) int {
 
 	_, startErr := svc.StartInstance(startParams)
 	if startErr != nil {
-		output.Error(startErr.Error())
-		return 1
+		if operationErr, ok := err.(awserr.Error); ok && operationErr.Code() == "OperationFailureException" {
+			output.Error("PRobably something oing on")
+			return 1
+		} else {
+			log.Printf("[ERROR] Error deleting Assement Target: %s", err)
+			return 1
+		}
 	}
 
 	serverParams := &lightsail.GetInstancesInput{}

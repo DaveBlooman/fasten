@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/DaveBlooman/fasten/appmeta"
@@ -69,7 +70,7 @@ func (s *SSHClient) Run(script []byte, language, appstack string, installCommand
 
 }
 
-func (s *SSHClient) CopyFile(contentsBytes []byte, filename, destination string) error {
+func (s *SSHClient) CopyFile(contentsBytes []byte, fileName, destination string) error {
 	session, err := s.Connection.NewSession()
 	if err != nil {
 		fmt.Printf("Failed to create session: %s", err)
@@ -80,17 +81,27 @@ func (s *SSHClient) CopyFile(contentsBytes []byte, filename, destination string)
 
 	contents := string(contentsBytes)
 
+	// This removes the / from the the start of the file name
+	if strings.HasPrefix(fileName, "/") {
+		fileName = fileName[1:]
+	}
+
+	// This will break up the filename which will include paths and just the filename
+	filePathName := strings.SplitAfter(fileName, "/")
+	file := filePathName[len(filePathName)-1]
+
 	go func() {
 		w, err := session.StdinPipe()
 		if err != nil {
-			fmt.Println("err")
+			output.Error(err.Error())
 		}
 		defer w.Close()
-		fmt.Fprintln(w, "C0644", len(contents), filename)
+		fmt.Fprintln(w, "C0644", len(contents), file)
 		fmt.Fprint(w, contents)
 		fmt.Fprint(w, "\x00")
 	}()
-	if err := session.Run("/usr/bin/scp -tr " + destination + "/" + filename); err != nil {
+	if err := session.Run("/usr/bin/scp -tr " + destination + "/" + fileName); err != nil {
+		fmt.Println(err)
 		output.Error("Error copying installation files to server")
 	}
 	return nil
@@ -108,10 +119,6 @@ func installSoftware(connection *ssh.Client, language string, install languages.
 
 	software := map[string]string{"Language": language, "Install File": installFile, "time": time.String()}
 	output.Banner("Installation...", software)
-
-	// ** Implement verbose flag here
-	// session.Stderr = os.Stderr
-	// session.Stdout = os.Stdout
 
 	err = session.Run("sudo -E sh /tmp/" + installFile)
 
@@ -218,32 +225,28 @@ func (s *SSHClient) StartApplication(app appmeta.Application, stack appmeta.AppS
 		stopSession.Close()
 	}
 
-	//
-	// if app.PreCommand != "" {
-	// preSession, err := s.Connection.NewSession()
-	// if err != nil {
-	// 	fmt.Printf("Failed to create session: %s", err)
-	// 	return err
-	// }
-	// err = preSession.Run(fmt.Sprintf("cd %s && %s", path, app.PreCommand))
-	//
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	output.Error("Pre-command failed to run")
-	// 	return err
-	// }
-	//
-	// preSession.Close()
-	// }
+	if app.PreCommand != "" {
+		preSession, err := s.Connection.NewSession()
+		if err != nil {
+			fmt.Printf("Failed to create session: %s", err)
+			return err
+		}
+		err = preSession.Run(fmt.Sprintf("cd %s && %s", path, app.PreCommand))
+
+		if err != nil {
+			fmt.Println(err)
+			output.Error("Pre-command failed to run")
+			return err
+		}
+
+		preSession.Close()
+	}
 
 	startSession, err := s.Connection.NewSession()
 	if err != nil {
 		fmt.Printf("Failed to create session: %s", err)
 		return err
 	}
-
-	// startSession.Stdout = os.Stdout
-	// startSession.Stderr = os.Stderr
 
 	err = startSession.Run(fmt.Sprintf("cd %s ; nohup %s >/dev/null 2>&1 >> app.log & echo $! > %s/%s.pid", path, app.RunCommand, path, app.Lang))
 
