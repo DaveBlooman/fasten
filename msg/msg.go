@@ -3,10 +3,15 @@ package msg
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
 
+	yaml "gopkg.in/yaml.v1"
+
+	"github.com/DaveBlooman/fasten/files"
+	"github.com/DaveBlooman/fasten/languages"
 	"github.com/DaveBlooman/fasten/output"
 	"github.com/fatih/color"
 )
@@ -58,8 +63,16 @@ func PromptIP() string {
 	return strings.TrimSpace(text)
 }
 
-func PromptOS() string {
-	items := []string{"ubuntu1604", "Amazon Linux", "centOS7", "SUSE Linux"}
+func PromptOS() (string, string) {
+	definition, err := files.Asset("libraries/definition.yaml")
+
+	var osType languages.OperatingSystem
+	err = yaml.Unmarshal([]byte(definition), &osType)
+	if err != nil {
+		log.Fatalf("error: %v", err)
+	}
+
+	items := []string{"ubuntu1604", "Amazon Linux"}
 
 	output.Selection(items)
 
@@ -78,7 +91,11 @@ func PromptOS() string {
 			fmt.Println("please select from the list above")
 			continue
 		}
-		return items[selection-1]
+		if items[selection-1] == "ubuntu1604" {
+			return "ubuntu1604", osType.Ubuntu1604.Home
+		} else {
+			return "amzlinux", osType.Amzlinux.Home
+		}
 	}
 
 }

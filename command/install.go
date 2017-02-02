@@ -11,6 +11,7 @@ import (
 
 	"github.com/DaveBlooman/fasten/appmeta"
 	"github.com/DaveBlooman/fasten/connect"
+	"github.com/DaveBlooman/fasten/files"
 	"github.com/DaveBlooman/fasten/languages"
 	"github.com/DaveBlooman/fasten/output"
 	_ "github.com/jteeuwen/go-bindata"
@@ -37,12 +38,12 @@ func (c *InstallCommand) Run(args []string) int {
 	msg := map[string]string{}
 
 	for i, app := range appStack.Applications {
-		setupFile, err := Asset(fmt.Sprintf("libraries/%s/%s/%s.sh", appStack.OS, app.Lang, app.Lang))
+		setupFile, err := files.Asset(fmt.Sprintf("libraries/%s/%s/%s.sh", appStack.OS, app.Lang, app.Lang))
 		if err != nil {
 			output.Error("language not found")
 		}
 
-		installFile, err := Asset(fmt.Sprintf("libraries/%s/%s/install.yaml", appStack.OS, app.Lang))
+		installFile, err := files.Asset(fmt.Sprintf("libraries/%s/%s/install.yaml", appStack.OS, app.Lang))
 		if err != nil {
 			output.Error("Installation file cannot be loaded")
 		}

@@ -8,9 +8,13 @@ install:
 	go install
 	fasten install
 
+init:
+	go install
+	fasten init
+
 status:
 	go install
 	fasten status
 
 bindata:
-	go-bindata -pkg command -o command/bindata.go libraries/...
+	go-bindata -pkg files -o bindata/bindata.go libraries/...

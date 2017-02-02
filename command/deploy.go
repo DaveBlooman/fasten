@@ -10,6 +10,7 @@ import (
 
 	"github.com/DaveBlooman/fasten/appmeta"
 	"github.com/DaveBlooman/fasten/connect"
+	"github.com/DaveBlooman/fasten/files"
 	"github.com/DaveBlooman/fasten/languages"
 	"github.com/DaveBlooman/fasten/output"
 
@@ -47,7 +48,7 @@ func (c *DeployCommand) Run(args []string) int {
 
 	for _, app := range appStack.Applications {
 
-		installFile, err := Asset(fmt.Sprintf("libraries/%s/%s/install.yaml", appStack.OS, app.Lang))
+		installFile, err := files.Asset(fmt.Sprintf("libraries/%s/%s/install.yaml", appStack.OS, app.Lang))
 		if err != nil {
 			output.Error("Installation file cannot be loaded")
 		}

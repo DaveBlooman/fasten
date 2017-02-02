@@ -12,8 +12,17 @@ Fasten manages everything over SCP and SSH, this means that no additional softwa
  - Manages your remote application processes
  - Installs your application dependencies
 
+### Support Languages
 
-If you have a server that is running Ubuntu or Amazon Linux, Fasten will also manage deployments.
+ - Ruby  
+ - Golang
+ - Node.js
+ - Python
+
+### Support Operating Systems
+
+- Ubuntu 16.04
+- Amazon Linux
 
 ## Commands
 ```sh
@@ -33,9 +42,10 @@ Generate
   #Creates Fasten config file, this is for when you are already running and AWS instance and have your key pair
 ```
 
-## Description
 
-## Usage
+
+
+
 
 ## Install
 

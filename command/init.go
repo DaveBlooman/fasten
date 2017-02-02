@@ -23,9 +23,6 @@ type InitCommand struct {
 
 func (c *InitCommand) Run(args []string) int {
 	var stack appmeta.AppStack
-	output.Standard("What kind of cloud are you interested in?  AWS, GCP or Azure")
-	cloud := msg.PromptCloud()
-	stack.Cloud = cloud
 
 	output.Standard("What is the full path to your key pair")
 	keypair := msg.PromptKeyPair()
@@ -36,7 +33,8 @@ func (c *InitCommand) Run(args []string) int {
 	stack.IP = ipAddress
 
 	output.Standard("What Operating System are you using ?")
-	operatingSystem := msg.PromptOS()
+	operatingSystem, home := msg.PromptOS()
+	stack.InstallDir = home
 	stack.OS = operatingSystem
 
 	output.Standard("How many applications are you interested in running?")

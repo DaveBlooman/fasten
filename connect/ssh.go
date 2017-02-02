@@ -120,6 +120,9 @@ func installSoftware(connection *ssh.Client, language string, install languages.
 	software := map[string]string{"Language": language, "Install File": installFile, "time": time.String()}
 	output.Banner("Installation...", software)
 
+	session.Stderr = os.Stderr
+	session.Stdout = os.Stdout
+
 	err = session.Run("sudo -E sh /tmp/" + installFile)
 
 	if err != nil {
@@ -129,20 +132,23 @@ func installSoftware(connection *ssh.Client, language string, install languages.
 
 	session.Close()
 
-	session2, err := connection.NewSession()
+	setupSession, err := connection.NewSession()
 	if err != nil {
 		fmt.Printf("Failed to create session: %s", err)
 		return err
 	}
 
-	err = session2.Run(install.PreCommand)
+	setupSession.Stderr = os.Stderr
+	setupSession.Stdout = os.Stdout
+
+	err = setupSession.Run(install.PreCommand)
 
 	if err != nil {
 		fmt.Println(err.Error())
 		output.Error("Software Pre-Installation Failed")
 		return err
 	}
-	session2.Close()
+	setupSession.Close()
 
 	output.Standard("Successfully installed " + language + "\n\n")
 
@@ -155,6 +161,9 @@ func (s *SSHClient) MakeDir(destination string) error {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	session.Stderr = os.Stderr
+	session.Stdout = os.Stdout
 
 	err = session.Run("mkdir -p " + destination)
 	if err != nil {
@@ -173,9 +182,9 @@ func (s *SSHClient) InstallDeps(install languages.Install, language, path string
 	}
 
 	// ** Implement verbose flag here
-	// session.Stderr = os.Stderr
-	// session.Stdout = os.Stdout
 	output.Standard("Installing dependencies, this may take some time...")
+	session.Stderr = os.Stderr
+	session.Stdout = os.Stdout
 
 	defer session.Close()
 
@@ -231,6 +240,10 @@ func (s *SSHClient) StartApplication(app appmeta.Application, stack appmeta.AppS
 			fmt.Printf("Failed to create session: %s", err)
 			return err
 		}
+
+		preSession.Stderr = os.Stderr
+		preSession.Stdout = os.Stdout
+
 		err = preSession.Run(fmt.Sprintf("cd %s && %s", path, app.PreCommand))
 
 		if err != nil {
@@ -246,6 +259,13 @@ func (s *SSHClient) StartApplication(app appmeta.Application, stack appmeta.AppS
 	if err != nil {
 		fmt.Printf("Failed to create session: %s", err)
 		return err
+	}
+
+	startSession.Stderr = os.Stderr
+	startSession.Stdout = os.Stdout
+
+	if app.RunCommand == "" {
+		output.Error("You have not set a run command, please set one in the fasten.yaml file")
 	}
 
 	err = startSession.Run(fmt.Sprintf("cd %s ; nohup %s >/dev/null 2>&1 >> app.log & echo $! > %s/%s.pid", path, app.RunCommand, path, app.Lang))

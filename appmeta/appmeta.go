@@ -1,7 +1,6 @@
 package appmeta
 
 type AppStack struct {
-	Cloud        string `yaml:"cloud"`
 	IP           string `yaml:"ip_address"`
 	OS           string `yaml:"operating_system"`
 	KeyPair      string `yaml:"key_pair"`
