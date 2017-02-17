@@ -1,10 +1,10 @@
 hash: 8fc90f04ac1a22793292700ebdf57182b2c309ee3b37ef93b80b17efbc167193
-updated: 2017-02-02T17:33:37.174479319Z
+updated: 2017-02-15T16:54:24.518508579Z
 imports:
 - name: github.com/armon/go-radix
   version: 4239b77079c7b5d1243b7b4736304ce8ddb6f0f2
 - name: github.com/aws/aws-sdk-go
-  version: 3f8f870ec9939e32b3372abf74d24e468bcd285d
+  version: 744809bad4e1770e6f2127c022c4d60117828bed
   subpackages:
   - aws
   - aws/awserr
@@ -34,32 +34,36 @@ imports:
 - name: github.com/bgentry/speakeasy
   version: 675b82c74c0ed12283ee81ba8a534c8982c07b85
 - name: github.com/fatih/color
-  version: 34e4ee095d12986a2cef5ddb9aeb3b8cfcfea17c
+  version: 5ec5d9d3c2cf82e9688b34e9bc27a94d616a7193
 - name: github.com/go-ini/ini
-  version: 6e4869b434bd001f6983749881c7ead3545887d8
+  version: e3c2d47c61e5333f9aa2974695dd94396eb69c75
 - name: github.com/jmespath/go-jmespath
   version: bd40a432e4c76585ef6b72d3fd96fb9b6dc7b68d
 - name: github.com/jteeuwen/go-bindata
   version: bbd0c6e271208dce66d8fda4bc536453cd27fc4a
 - name: github.com/mattn/go-colorable
-  version: 6c903ff4aa50920ca86087a280590b36b3152b9c
+  version: 5411d3eea5978e6cdc258b30de592b60df6aba96
 - name: github.com/mattn/go-isatty
-  version: 66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8
+  version: 281032e84ae07510239465db46bf442aa44b953a
 - name: github.com/mitchellh/cli
-  version: fa17b36f6c61f1ddbbb08c9f6fde94b3c065a09d
+  version: 494eb006fe29e9dc75fea6da4df4818f7e046b73
+- name: github.com/rliebling/env
+  version: c13b0b0eb1f9c9d4f0e09e8a0c316a447b07dd1e
+- name: github.com/rliebling/gitignorer
+  version: ab3a57ead50194947dc78c9c932b424bd9aa2c1a
 - name: golang.org/x/crypto
-  version: 1ed0c38df5ad473c1d85c1f6490fb2868601a1d3
+  version: 453249f01cfeb54c3d549ddb75ff152ca243f9d8
   subpackages:
   - curve25519
   - ed25519
   - ed25519/internal/edwards25519
   - ssh
 - name: golang.org/x/sys
-  version: 9bb9f0998d48b31547d975974935ae9b48c7a03c
+  version: 7a6e5648d140666db5d920909e082ca00a87ba2c
   subpackages:
   - unix
 - name: gopkg.in/yaml.v1
   version: 9f9df34309c04878acc86042b16630b0f696e1de
 - name: gopkg.in/yaml.v2
-  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
+  version: a3f3340b5840cee44f372bddb5880fcbc419b46a
 testImports: []

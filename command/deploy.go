@@ -13,6 +13,7 @@ import (
 	"github.com/DaveBlooman/fasten/files"
 	"github.com/DaveBlooman/fasten/languages"
 	"github.com/DaveBlooman/fasten/output"
+	"github.com/DaveBlooman/fasten/workflow"
 
 	yaml "gopkg.in/yaml.v2"
 )
@@ -41,10 +42,10 @@ func (c *DeployCommand) Run(args []string) int {
 		Key:  appStack.KeyPair,
 	}
 
-	err = fastenSSH.SSHConfig()
-	if err != nil {
-		output.Standard("Error setting up SSH")
-	}
+	// err = fastenSSH.SSHConfig()
+	// if err != nil {
+	// 	output.Standard("Error setting up SSH")
+	// }
 
 	for _, app := range appStack.Applications {
 
@@ -61,25 +62,25 @@ func (c *DeployCommand) Run(args []string) int {
 
 		appDestination := appStack.InstallDir + "/" + app.Name
 
-		err = fastenSSH.MakeDir(appDestination)
-		if err != nil {
-			fmt.Println(err)
-		}
+		// err = fastenSSH.MakeDir(appDestination)
+		// if err != nil {
+		// 	fmt.Println(err)
+		// }
 
 		err = copyFiles(app, appStack, appDestination, fastenSSH)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		err = fastenSSH.InstallDeps(installCommand, app.Lang, appDestination)
-		if err != nil {
-			output.Error("Unable to install application dependecies")
-		}
-
-		err = fastenSSH.StartApplication(app, appStack, appDestination)
-		if err != nil {
-			output.Error("Unable to start/stop application")
-		}
+		// err = fastenSSH.InstallDeps(installCommand, app.Lang, appDestination)
+		// if err != nil {
+		// 	output.Error("Unable to install application dependecies")
+		// }
+		//
+		// err = fastenSSH.StartApplication(app, appStack, appDestination)
+		// if err != nil {
+		// 	output.Error("Unable to start/stop application")
+		// }
 
 		output.Success("Application: " + app.Name + " has been deployed successfully")
 	}
@@ -100,43 +101,57 @@ func (c *DeployCommand) Help() string {
 
 func copyFiles(app appmeta.Application, stack appmeta.AppStack, appDestination string, connection connect.SSHClient) error {
 
-	fileList, dirList := getFiles(app.Path)
-
-	for _, dir := range dirList {
-
-		dirName := strings.SplitAfter(dir, app.Path)[1]
-
-		err := connection.MakeDir(appDestination + dirName)
-		if err != nil {
-			fmt.Println(err)
-		}
+	_, _, err := getFiles(app.Path)
+	if err != nil {
+		return err
 	}
 
-	for _, file := range fileList {
-		data, err := ioutil.ReadFile(file)
-		if err != nil {
-			return err
-		}
+	// for _, dir := range dirList {
+	//
+	// 	dirName := strings.SplitAfter(dir, app.Path)[1]
+	//
+	// 	err := connection.MakeDir(appDestination + dirName)
+	// 	if err != nil {
+	// 		fmt.Println(err)
+	// 	}
+	// }
 
-		fileName := strings.SplitAfter(file, app.Path)[1]
-
-		fileCopy := connection.CopyFile(data, fileName, appDestination)
-		if fileCopy != nil {
-			return fileCopy
-		}
-	}
+	// for _, file := range fileList {
+	// 	data, err := ioutil.ReadFile(file)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	//
+	// 	fileName := strings.SplitAfter(file, app.Path)[1]
+	//
+	// 	fileCopy := connection.CopyFile(data, fileName, appDestination)
+	// 	if fileCopy != nil {
+	// 		return fileCopy
+	// 	}
+	// }
 
 	return nil
 }
 
-func getFiles(filesDir string) ([]string, []string) {
+func getFiles(filesDir string) ([]string, []string, error) {
+
+	ignoreFile, err := workflow.ReadIgnoreFile(".")
+	if err != nil {
+		return nil, nil, err
+
+	}
+
+	files, err := workflow.LoadFiles(filesDir, ignoreFile)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	fileList := []string{}
 	dirList := []string{}
 
-	err := filepath.Walk(filesDir, func(path string, f os.FileInfo, err error) error {
+	err = filepath.Walk(filesDir, func(path string, f os.FileInfo, err error) error {
 		if err != nil {
-			log.Fatal("Error:", err)
+			return err
 		}
 		if f.IsDir() {
 			dirList = append(dirList, path)
@@ -147,7 +162,29 @@ func getFiles(filesDir string) ([]string, []string) {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, nil, err
 	}
-	return fileList, dirList
+
+	for _, file := range fileList {
+		t := contains(filesDir, files, file)
+		if t {
+			fmt.Println("winning")
+		}
+
+	}
+	// fmt.Println(fileList)
+	// fmt.Println(dirList)
+	return fileList, dirList, nil
+}
+
+func contains(dir string, s []string, e string) bool {
+	for _, a := range s {
+		// fmt.Println(dir + "/" + a)
+		// fmt.Println(e)
+		if a == e {
+			fmt.Println("y")
+			return true
+		}
+	}
+	return false
 }
