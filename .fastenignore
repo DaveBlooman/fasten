@@ -2,4 +2,3 @@
 vendor/
 .git/
 node_modules/
-config.ru

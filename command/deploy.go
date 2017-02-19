@@ -40,12 +40,13 @@ func (c *DeployCommand) Run(args []string) int {
 		Host: appStack.IP,
 		Port: 22,
 		Key:  appStack.KeyPair,
+		User: "ubuntu",
 	}
 
-	// err = fastenSSH.SSHConfig()
-	// if err != nil {
-	// 	output.Standard("Error setting up SSH")
-	// }
+	err = fastenSSH.SSHConfig()
+	if err != nil {
+		output.Standard("Error setting up SSH")
+	}
 
 	for _, app := range appStack.Applications {
 
@@ -62,25 +63,25 @@ func (c *DeployCommand) Run(args []string) int {
 
 		appDestination := appStack.InstallDir + "/" + app.Name
 
-		// err = fastenSSH.MakeDir(appDestination)
-		// if err != nil {
-		// 	fmt.Println(err)
-		// }
+		err = fastenSSH.MakeDir(appDestination)
+		if err != nil {
+			fmt.Println(err)
+		}
 
 		err = copyFiles(app, appStack, appDestination, fastenSSH)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		// err = fastenSSH.InstallDeps(installCommand, app.Lang, appDestination)
-		// if err != nil {
-		// 	output.Error("Unable to install application dependecies")
-		// }
-		//
-		// err = fastenSSH.StartApplication(app, appStack, appDestination)
-		// if err != nil {
-		// 	output.Error("Unable to start/stop application")
-		// }
+		err = fastenSSH.InstallDeps(installCommand, app.Lang, appDestination)
+		if err != nil {
+			output.Error("Unable to install application dependecies")
+		}
+
+		err = fastenSSH.StartApplication(app, appStack, appDestination)
+		if err != nil {
+			output.Error("Unable to start/stop application")
+		}
 
 		output.Success("Application: " + app.Name + " has been deployed successfully")
 	}
@@ -101,34 +102,34 @@ func (c *DeployCommand) Help() string {
 
 func copyFiles(app appmeta.Application, stack appmeta.AppStack, appDestination string, connection connect.SSHClient) error {
 
-	_, _, err := getFiles(app.Path)
+	fileList, dirList, err := getFiles(app.Path)
 	if err != nil {
 		return err
 	}
 
-	// for _, dir := range dirList {
-	//
-	// 	dirName := strings.SplitAfter(dir, app.Path)[1]
-	//
-	// 	err := connection.MakeDir(appDestination + dirName)
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 	}
-	// }
+	for _, dir := range dirList {
 
-	// for _, file := range fileList {
-	// 	data, err := ioutil.ReadFile(file)
-	// 	if err != nil {
-	// 		return err
-	// 	}
-	//
-	// 	fileName := strings.SplitAfter(file, app.Path)[1]
-	//
-	// 	fileCopy := connection.CopyFile(data, fileName, appDestination)
-	// 	if fileCopy != nil {
-	// 		return fileCopy
-	// 	}
-	// }
+		dirName := strings.SplitAfter(dir, app.Path)[1]
+
+		err := connection.MakeDir(appDestination + dirName)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	for _, file := range fileList {
+		data, err := ioutil.ReadFile(file)
+		if err != nil {
+			return err
+		}
+
+		fileName := strings.SplitAfter(file, app.Path)[1]
+
+		fileCopy := connection.CopyFile(data, fileName, appDestination)
+		if fileCopy != nil {
+			return fileCopy
+		}
+	}
 
 	return nil
 }
@@ -165,24 +166,21 @@ func getFiles(filesDir string) ([]string, []string, error) {
 		return nil, nil, err
 	}
 
+	var deployableFiles []string
+
 	for _, file := range fileList {
 		t := contains(filesDir, files, file)
 		if t {
-			fmt.Println("winning")
+			deployableFiles = append(deployableFiles, file)
 		}
-
 	}
-	// fmt.Println(fileList)
-	// fmt.Println(dirList)
-	return fileList, dirList, nil
+
+	return deployableFiles, dirList, nil
 }
 
 func contains(dir string, s []string, e string) bool {
 	for _, a := range s {
-		// fmt.Println(dir + "/" + a)
-		// fmt.Println(e)
-		if a == e {
-			fmt.Println("y")
+		if dir+"/"+a == e {
 			return true
 		}
 	}

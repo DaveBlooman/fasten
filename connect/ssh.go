@@ -20,6 +20,7 @@ type SSHClient struct {
 	Port       int
 	Key        string
 	Connection *ssh.Client
+	User       string
 }
 
 func PublicKeyFile(file string) ssh.AuthMethod {
@@ -38,7 +39,7 @@ func PublicKeyFile(file string) ssh.AuthMethod {
 func (s *SSHClient) SSHConfig() error {
 
 	s.Config = &ssh.ClientConfig{
-		User: "ec2-user",
+		User: s.User,
 		Auth: []ssh.AuthMethod{
 			PublicKeyFile(s.Key),
 		},
@@ -278,6 +279,46 @@ func (s *SSHClient) StartApplication(app appmeta.Application, stack appmeta.AppS
 	startSession.Close()
 
 	output.Standard("Starting Application")
+
+	return nil
+}
+
+func (s *SSHClient) StopService(service, path string) error {
+	session, err := s.Connection.NewSession()
+	if err != nil {
+		output.Error("Failed to create session")
+		return err
+	}
+
+	defer session.Close()
+
+	err = session.Run(fmt.Sprintf("cd %s ; cat %s.pid | xargs kill", path, service))
+
+	if err != nil {
+		if strings.Contains(err.Error(), "directory") {
+			fmt.Println("testin")
+		}
+
+		if err.Error() != "Process exited with status 123" {
+			output.Error("Failed to stop application")
+			return err
+		}
+	}
+
+	stopSession, err := s.Connection.NewSession()
+	if err != nil {
+		fmt.Printf("Failed to create session: %s", err)
+		return err
+	}
+
+	err = stopSession.Run(fmt.Sprintf("cd %s && rm %s.pid", path, service))
+
+	if err != nil {
+
+		if _, ok := err.(*ssh.ExitError); !ok {
+			return err
+		}
+	}
 
 	return nil
 }
