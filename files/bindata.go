@@ -6,7 +6,8 @@
 // libraries/amzlinux/ruby/ruby.sh
 // libraries/definition.yaml
 // libraries/ubuntu1604/nodejs.sh
-// libraries/ubuntu1604/ruby.sh
+// libraries/ubuntu1604/ruby/install.yaml
+// libraries/ubuntu1604/ruby/ruby.sh
 // DO NOT EDIT!
 
 package files
@@ -18,7 +19,6 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
-	"path"
 	"path/filepath"
 	"strings"
 	"time"
@@ -90,12 +90,12 @@ func librariesAmzlinuxNodejsInstallYaml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "libraries/amzlinux/nodejs/install.yaml", size: 37, mode: os.FileMode(420), modTime: time.Unix(1483959172, 0)}
+	info := bindataFileInfo{name: "libraries/amzlinux/nodejs/install.yaml", size: 37, mode: os.FileMode(420), modTime: time.Unix(1483236559, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
-var _librariesAmzlinuxNodejsNodejsSh = []byte("\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\x5c\xcd\x4b\xaa\xc3\x30\x0c\x85\xe1\xb9\x57\xa1\xcb\x1d\x06\xc5\xc3\x42\x37\x53\x1c\x45\x34\x6e\xfd\x22\x92\x20\x81\x2e\xbe\x76\x86\x1d\xff\x87\xef\xfc\xff\xf9\x25\x16\xbf\x04\xd9\x9c\x13\x56\x40\xb6\xc3\xb9\xd3\x32\x58\x5b\x83\x32\xe0\xe9\xc8\xf6\x04\x88\x12\x13\x97\xbe\xc0\x54\x29\x68\xac\x05\x36\xd5\x26\x77\xef\xf7\x96\xe7\x52\x57\x96\x6a\x3b\xf1\x4c\x35\xfb\x6e\x59\x7b\xdc\xe6\x03\x3e\x30\x74\xc0\x0b\x8d\x45\x34\xa4\xae\x9d\xf0\x24\x42\x9a\x26\xc8\xe1\x7d\xbd\xfc\xe4\xe1\xbd\x64\x84\x6f\x00\x00\x00\xff\xff\x53\x9c\xdb\x1e\xa4\x00\x00\x00")
+var _librariesAmzlinuxNodejsNodejsSh = []byte("\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\x5c\xcd\x3b\xaa\xc3\x30\x10\x46\xe1\x5e\xab\xf8\x2f\xb7\x34\x63\x95\x81\x6c\x26\xc8\xe3\x21\x56\xa2\x17\x9e\x11\xd8\x90\xc5\x07\xb9\x4c\x7d\xe0\x3b\xff\x7f\x7e\x89\xc5\x2f\x41\x37\xe7\x54\x0c\x24\xfd\x70\xee\xec\x19\xbd\xad\xc1\x04\x74\x3a\xee\x7b\x02\x91\xc6\x24\xc5\x40\x94\x2a\x07\x8b\xb5\x60\x33\x6b\x7a\xf7\x7e\x6f\x79\x2e\x75\x15\xad\x7d\x67\x99\xb9\x66\xaf\x62\xbd\x3d\x6e\xf3\x81\x0f\x86\x0e\xba\xd0\x58\xd4\x42\x4a\xa0\x13\x4f\x66\xe2\x69\x42\x0e\xef\xeb\xf2\x93\x87\xf7\xd2\x11\xbe\x01\x00\x00\xff\xff\x53\x9c\xdb\x1e\xa4\x00\x00\x00")
 
 func librariesAmzlinuxNodejsNodejsShBytes() ([]byte, error) {
 	return bindataRead(
@@ -110,7 +110,7 @@ func librariesAmzlinuxNodejsNodejsSh() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "libraries/amzlinux/nodejs/nodejs.sh", size: 164, mode: os.FileMode(420), modTime: time.Unix(1484753114, 0)}
+	info := bindataFileInfo{name: "libraries/amzlinux/nodejs/nodejs.sh", size: 164, mode: os.FileMode(420), modTime: time.Unix(1484512387, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -130,12 +130,12 @@ func librariesAmzlinuxRubyInstallYaml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "libraries/amzlinux/ruby/install.yaml", size: 57, mode: os.FileMode(420), modTime: time.Unix(1483442956, 0)}
+	info := bindataFileInfo{name: "libraries/amzlinux/ruby/install.yaml", size: 57, mode: os.FileMode(420), modTime: time.Unix(1483311047, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
-var _librariesAmzlinuxRubyRubySh = []byte("\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\x5c\x8e\xcf\xca\xc2\x30\x10\xc4\xef\xfb\x14\xfb\xf5\xf3\x1a\x23\xf5\x26\x58\xf0\xe6\xd1\x83\x2f\x90\xb4\x83\x2d\xf4\x1f\xd9\x44\x1a\x9f\x5e\x13\x2d\x82\x97\x59\x66\x86\x1d\x7e\xff\x7f\xda\x76\xa3\xb6\x46\x5a\x22\x81\x67\x85\xb0\x10\xc5\x30\x70\x98\x1b\xe3\xc1\x2a\x66\x07\x67\x04\xec\x82\x8d\xe5\x2e\x9f\xb5\xe8\x46\xf1\xa6\xef\xdf\xd5\x5e\x35\xb8\x63\x35\xfc\xe8\x3b\x9b\xe5\x13\xbf\x5e\x6e\xf8\x2e\x2b\x89\xe2\x31\x10\xea\x76\xe2\x02\xcb\x3c\x39\xcf\x97\xd3\xf5\x7c\xdc\x24\x3d\xe8\x76\x1a\xa0\x51\x97\x2a\x08\x5c\x02\x2d\xb8\xaa\xf8\x27\xde\x26\x78\x57\xd3\x33\x00\x00\xff\xff\x02\x2a\x0e\x8b\xcb\x00\x00\x00")
+var _librariesAmzlinuxRubyRubySh = []byte("\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\x5c\x90\xc1\x6a\xc6\x20\x10\x84\xef\x3e\xc5\x36\x2d\xe4\x64\x2d\xe9\xad\xd0\x40\xa1\x87\x1e\x7b\xc8\x0b\xa8\x59\x12\x41\xa3\xb8\x5a\x62\x9f\xbe\x98\x2a\x3f\xfc\x97\x1d\x66\x3e\x61\x64\x1e\x1f\x84\x32\x87\x50\x92\x76\xc6\x08\x13\x70\xcc\x27\x63\x25\x3b\xc8\x61\x95\x09\x81\x97\xcb\x61\x94\x84\x10\xb3\x2a\xd3\xcb\x25\x1d\x98\x83\x92\xb4\xf6\x1f\xbd\xf2\x15\x7f\xb0\x1b\xf8\xb5\x46\x5d\xa7\xc5\x9b\xd6\x60\x8d\x3a\x9d\x9d\xba\x36\x52\x1d\xd9\xd4\xb5\xa5\xad\x62\x8b\x3e\x87\xde\x33\x7e\x56\xe4\x83\xc3\x23\xc1\xe2\xbd\xa5\xb1\xbe\xdb\xf0\xf6\x63\x4e\x85\x12\x3a\x86\x7a\xf7\x30\xe0\x19\x7c\x4c\xf0\xfd\xb1\x7c\xbd\x3f\xd5\xfb\x26\x76\xef\x50\xa0\x9e\x78\x26\x8c\x75\x80\x01\xe6\x19\xee\xe2\xe7\x3a\x4a\xd4\xec\x2f\x00\x00\xff\xff\xf2\x4b\x38\x28\x23\x01\x00\x00")
 
 func librariesAmzlinuxRubyRubyShBytes() ([]byte, error) {
 	return bindataRead(
@@ -150,7 +150,7 @@ func librariesAmzlinuxRubyRubySh() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "libraries/amzlinux/ruby/ruby.sh", size: 203, mode: os.FileMode(420), modTime: time.Unix(1484753114, 0)}
+	info := bindataFileInfo{name: "libraries/amzlinux/ruby/ruby.sh", size: 291, mode: os.FileMode(420), modTime: time.Unix(1487454625, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -170,7 +170,7 @@ func librariesDefinitionYaml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "libraries/definition.yaml", size: 66, mode: os.FileMode(420), modTime: time.Unix(1486055873, 0)}
+	info := bindataFileInfo{name: "libraries/definition.yaml", size: 66, mode: os.FileMode(420), modTime: time.Unix(1487454625, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -190,27 +190,47 @@ func librariesUbuntu1604NodejsSh() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "libraries/ubuntu1604/nodejs.sh", size: 0, mode: os.FileMode(420), modTime: time.Unix(1483958389, 0)}
+	info := bindataFileInfo{name: "libraries/ubuntu1604/nodejs.sh", size: 0, mode: os.FileMode(420), modTime: time.Unix(1483118317, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
-var _librariesUbuntu1604RubySh = []byte("\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\x52\x56\xd4\x4f\xca\xcc\xd3\x4f\x4a\x2c\xce\xe0\xe2\x2a\x2e\x4d\xc9\x57\xa8\x2c\xcd\x55\xc8\xcc\x2b\x2e\x49\xcc\xc9\x51\x28\x2a\x4d\xaa\xd4\x4d\x49\x2d\x4b\x85\x30\x15\xd2\xf3\x15\x2a\x92\x93\x74\x4b\x4b\x32\x73\x14\x74\x2b\xb9\x00\x01\x00\x00\xff\xff\xa6\x58\x98\xfc\x3d\x00\x00\x00")
+var _librariesUbuntu1604RubyInstallYaml = []byte("\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\x2a\x28\x4a\x8d\x4f\xce\xcf\xcd\x4d\xcc\x4b\xb1\x52\x48\x4f\xcd\x55\xc8\xcc\x2b\x2e\x49\xcc\xc9\x51\x48\x2a\xcd\x4b\xc9\x49\x2d\xe2\x82\x4b\x42\x04\x60\xf2\x5c\x80\x00\x00\x00\xff\xff\x98\xd3\x76\xaf\x39\x00\x00\x00")
 
-func librariesUbuntu1604RubyShBytes() ([]byte, error) {
+func librariesUbuntu1604RubyInstallYamlBytes() ([]byte, error) {
 	return bindataRead(
-		_librariesUbuntu1604RubySh,
-		"libraries/ubuntu1604/ruby.sh",
+		_librariesUbuntu1604RubyInstallYaml,
+		"libraries/ubuntu1604/ruby/install.yaml",
 	)
 }
 
-func librariesUbuntu1604RubySh() (*asset, error) {
-	bytes, err := librariesUbuntu1604RubyShBytes()
+func librariesUbuntu1604RubyInstallYaml() (*asset, error) {
+	bytes, err := librariesUbuntu1604RubyInstallYamlBytes()
 	if err != nil {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "libraries/ubuntu1604/ruby.sh", size: 61, mode: os.FileMode(420), modTime: time.Unix(1483958389, 0)}
+	info := bindataFileInfo{name: "libraries/ubuntu1604/ruby/install.yaml", size: 57, mode: os.FileMode(420), modTime: time.Unix(1487456007, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _librariesUbuntu1604RubyRubySh = []byte("\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\x4c\x90\x4d\x6e\x84\x30\x0c\x85\xf7\x39\x85\xab\xae\x43\x3a\x4c\x57\x3d\x46\x6f\x10\x83\x87\xb1\x64\x02\x8d\xed\x29\xf4\xf4\x15\x4c\x41\x5d\xbd\x9f\x2f\xca\x93\xfc\xfa\x92\x90\x4b\xc2\xac\xf7\x10\x94\x0c\x22\xf9\x12\x42\x9e\x2d\x0e\x64\xe0\x73\x9f\x8d\x20\xae\x67\xc3\x45\x2d\x8b\x40\x75\x5c\xdb\xe6\x7a\x68\xec\xe9\x01\x03\x5b\xec\xa6\x4a\xd0\x79\x15\xf8\x11\xc6\xcb\xb0\x03\x74\x96\x3e\x92\x2a\x15\xe3\x2c\x20\x8c\xaa\xb2\x23\x61\xac\x94\x7b\xe1\x42\x47\x5e\xf3\x78\x32\xfd\x12\x36\x7a\x7e\xff\xe7\xb7\x7a\x19\xa5\x3d\x9e\x2c\x2a\x76\x39\xc2\xb6\xfc\x1e\xa7\x99\xca\xbf\x81\xdb\x8d\x77\x1b\xd7\x10\xba\xfb\xf4\x5d\x20\x7e\x82\xa3\x17\xf3\x8f\xa7\x40\x72\xad\x49\xa6\x2e\xcb\x76\x0f\x48\x8f\x5c\x93\x30\xa6\x81\x46\x4d\x6d\x73\x6d\xde\xc2\x6f\x00\x00\x00\xff\xff\xe0\x3f\x78\x97\x2b\x01\x00\x00")
+
+func librariesUbuntu1604RubyRubyShBytes() ([]byte, error) {
+	return bindataRead(
+		_librariesUbuntu1604RubyRubySh,
+		"libraries/ubuntu1604/ruby/ruby.sh",
+	)
+}
+
+func librariesUbuntu1604RubyRubySh() (*asset, error) {
+	bytes, err := librariesUbuntu1604RubyRubyShBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "libraries/ubuntu1604/ruby/ruby.sh", size: 299, mode: os.FileMode(420), modTime: time.Unix(1487457637, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -268,12 +288,13 @@ func AssetNames() []string {
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
 	"libraries/amzlinux/nodejs/install.yaml": librariesAmzlinuxNodejsInstallYaml,
-	"libraries/amzlinux/nodejs/nodejs.sh":    librariesAmzlinuxNodejsNodejsSh,
-	"libraries/amzlinux/ruby/install.yaml":   librariesAmzlinuxRubyInstallYaml,
-	"libraries/amzlinux/ruby/ruby.sh":        librariesAmzlinuxRubyRubySh,
-	"libraries/definition.yaml":              librariesDefinitionYaml,
-	"libraries/ubuntu1604/nodejs.sh":         librariesUbuntu1604NodejsSh,
-	"libraries/ubuntu1604/ruby.sh":           librariesUbuntu1604RubySh,
+	"libraries/amzlinux/nodejs/nodejs.sh": librariesAmzlinuxNodejsNodejsSh,
+	"libraries/amzlinux/ruby/install.yaml": librariesAmzlinuxRubyInstallYaml,
+	"libraries/amzlinux/ruby/ruby.sh": librariesAmzlinuxRubyRubySh,
+	"libraries/definition.yaml": librariesDefinitionYaml,
+	"libraries/ubuntu1604/nodejs.sh": librariesUbuntu1604NodejsSh,
+	"libraries/ubuntu1604/ruby/install.yaml": librariesUbuntu1604RubyInstallYaml,
+	"libraries/ubuntu1604/ruby/ruby.sh": librariesUbuntu1604RubyRubySh,
 }
 
 // AssetDir returns the file names below a certain
@@ -315,23 +336,25 @@ type bintree struct {
 	Func     func() (*asset, error)
 	Children map[string]*bintree
 }
-
 var _bintree = &bintree{nil, map[string]*bintree{
 	"libraries": &bintree{nil, map[string]*bintree{
 		"amzlinux": &bintree{nil, map[string]*bintree{
 			"nodejs": &bintree{nil, map[string]*bintree{
 				"install.yaml": &bintree{librariesAmzlinuxNodejsInstallYaml, map[string]*bintree{}},
-				"nodejs.sh":    &bintree{librariesAmzlinuxNodejsNodejsSh, map[string]*bintree{}},
+				"nodejs.sh": &bintree{librariesAmzlinuxNodejsNodejsSh, map[string]*bintree{}},
 			}},
 			"ruby": &bintree{nil, map[string]*bintree{
 				"install.yaml": &bintree{librariesAmzlinuxRubyInstallYaml, map[string]*bintree{}},
-				"ruby.sh":      &bintree{librariesAmzlinuxRubyRubySh, map[string]*bintree{}},
+				"ruby.sh": &bintree{librariesAmzlinuxRubyRubySh, map[string]*bintree{}},
 			}},
 		}},
 		"definition.yaml": &bintree{librariesDefinitionYaml, map[string]*bintree{}},
 		"ubuntu1604": &bintree{nil, map[string]*bintree{
 			"nodejs.sh": &bintree{librariesUbuntu1604NodejsSh, map[string]*bintree{}},
-			"ruby.sh":   &bintree{librariesUbuntu1604RubySh, map[string]*bintree{}},
+			"ruby": &bintree{nil, map[string]*bintree{
+				"install.yaml": &bintree{librariesUbuntu1604RubyInstallYaml, map[string]*bintree{}},
+				"ruby.sh": &bintree{librariesUbuntu1604RubyRubySh, map[string]*bintree{}},
+			}},
 		}},
 	}},
 }}
@@ -346,7 +369,7 @@ func RestoreAsset(dir, name string) error {
 	if err != nil {
 		return err
 	}
-	err = os.MkdirAll(_filePath(dir, path.Dir(name)), os.FileMode(0755))
+	err = os.MkdirAll(_filePath(dir, filepath.Dir(name)), os.FileMode(0755))
 	if err != nil {
 		return err
 	}
@@ -370,7 +393,7 @@ func RestoreAssets(dir, name string) error {
 	}
 	// Dir
 	for _, child := range children {
-		err = RestoreAssets(dir, path.Join(name, child))
+		err = RestoreAssets(dir, filepath.Join(name, child))
 		if err != nil {
 			return err
 		}
@@ -382,3 +405,4 @@ func _filePath(dir, name string) string {
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	return filepath.Join(append([]string{dir}, strings.Split(cannonicalName, "/")...)...)
 }
+

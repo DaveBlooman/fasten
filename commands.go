@@ -32,6 +32,12 @@ func Commands(meta *command.Meta) map[string]cli.CommandFactory {
 			}, nil
 		},
 
+		"stop": func() (cli.Command, error) {
+			return &command.StopCommand{
+				Meta: *meta,
+			}, nil
+		},
+
 		"install": func() (cli.Command, error) {
 			return &command.InstallCommand{
 				Meta: *meta,

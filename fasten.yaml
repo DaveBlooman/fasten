@@ -1,7 +1,7 @@
-ip_address: 34.249.42.15
-operating_system: amzlinux
-key_pair: /Users/dblooman/go/src/github.com/DaveBlooman/fasten/dev.pem
-install_dir: /home/ec2-user
+ip_address: 34.249.156.141
+operating_system: ubuntu1604
+key_pair: /Users/dblooman/go/src/github.com/DaveBlooman/fasten/fasten.pem
+install_dir: /home/ubuntu
 applications:
 - language: ruby
   name: ruby-app

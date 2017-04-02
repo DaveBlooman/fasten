@@ -58,6 +58,7 @@ func (c *InstallCommand) Run(args []string) int {
 			Host: appStack.IP,
 			Port: 22,
 			Key:  appStack.KeyPair,
+			User: "ubuntu",
 		}
 
 		err = fastenSSH.SSHConfig()

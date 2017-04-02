@@ -13,6 +13,7 @@ import (
 	"github.com/DaveBlooman/fasten/files"
 	"github.com/DaveBlooman/fasten/languages"
 	"github.com/DaveBlooman/fasten/output"
+	"github.com/DaveBlooman/fasten/workflow"
 
 	yaml "gopkg.in/yaml.v2"
 )
@@ -39,6 +40,7 @@ func (c *DeployCommand) Run(args []string) int {
 		Host: appStack.IP,
 		Port: 22,
 		Key:  appStack.KeyPair,
+		User: "ubuntu",
 	}
 
 	err = fastenSSH.SSHConfig()
@@ -100,7 +102,10 @@ func (c *DeployCommand) Help() string {
 
 func copyFiles(app appmeta.Application, stack appmeta.AppStack, appDestination string, connection connect.SSHClient) error {
 
-	fileList, dirList := getFiles(app.Path)
+	fileList, dirList, err := getFiles(app.Path)
+	if err != nil {
+		return err
+	}
 
 	for _, dir := range dirList {
 
@@ -129,14 +134,25 @@ func copyFiles(app appmeta.Application, stack appmeta.AppStack, appDestination s
 	return nil
 }
 
-func getFiles(filesDir string) ([]string, []string) {
+func getFiles(filesDir string) ([]string, []string, error) {
+
+	ignoreFile, err := workflow.ReadIgnoreFile(".")
+	if err != nil {
+		return nil, nil, err
+
+	}
+
+	files, err := workflow.LoadFiles(filesDir, ignoreFile)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	fileList := []string{}
 	dirList := []string{}
 
-	err := filepath.Walk(filesDir, func(path string, f os.FileInfo, err error) error {
+	err = filepath.Walk(filesDir, func(path string, f os.FileInfo, err error) error {
 		if err != nil {
-			log.Fatal("Error:", err)
+			return err
 		}
 		if f.IsDir() {
 			dirList = append(dirList, path)
@@ -147,7 +163,26 @@ func getFiles(filesDir string) ([]string, []string) {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, nil, err
 	}
-	return fileList, dirList
+
+	var deployableFiles []string
+
+	for _, file := range fileList {
+		t := contains(filesDir, files, file)
+		if t {
+			deployableFiles = append(deployableFiles, file)
+		}
+	}
+
+	return deployableFiles, dirList, nil
+}
+
+func contains(dir string, s []string, e string) bool {
+	for _, a := range s {
+		if dir+"/"+a == e {
+			return true
+		}
+	}
+	return false
 }

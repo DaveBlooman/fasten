@@ -16,5 +16,9 @@ status:
 	go install
 	fasten status
 
+stop:
+	go install
+	fasten stop
+
 bindata:
-	go-bindata -pkg files -o bindata/bindata.go libraries/...
+	go-bindata -pkg files -o files/bindata.go libraries/...
