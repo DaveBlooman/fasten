@@ -1,0 +1,8 @@
+amzlinux:
+  home: /home/ec2-user
+  ssh_user: ec2-user
+  version: amzlinux
+ubuntu1604:
+  home: /home/ubuntu
+  ssh_user: ubuntu
+  version: ubuntu1604

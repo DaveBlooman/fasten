@@ -1,0 +1,3 @@
+pre_command: gem install bundler
+command: bundle install
+build_local: false

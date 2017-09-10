@@ -1,0 +1,3 @@
+pre_command:
+command: none
+build_local: true

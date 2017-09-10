@@ -1,0 +1,21 @@
+ip_address: 52.208.123.100
+ssh_user: ubuntu
+operating_system: ubuntu1604
+key_pair: /path/to/key.pem
+install_dir: /home/ubuntu
+applications:
+- language: ruby
+  name: ruby-app
+  path: /Users/dblooman/Desktop/fasten/ruby-app
+  pre_command: ""
+  run_command: "rackup -o 0.0.0.0"
+- language: golang
+  name: go-app
+  path: /Users/dblooman/Desktop/fasten/go-app
+  pre_command: "chmod +x main"
+  run_command: "./main"
+- language: nodejs
+  name: node-app
+  path: /Users/dblooman/Desktop/fasten/node-app
+  pre_command: ""
+  run_command: "node index.js"
